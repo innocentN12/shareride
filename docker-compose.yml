@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  25RP18225_php:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+
+  25RP18225_db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: 25RP18225_shareride_db
+    ports:
+      - "3306:3306"
+
+  25RP18225_phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: 25RP18225_db
