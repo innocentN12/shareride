@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+// Check if the user is already logged in
+if (isset($_SESSION['user_id'])) {
+    // User is already logged in, redirect to dashboard
+    header("Location: dashboard.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -7,7 +14,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>Access Required</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,8 +24,8 @@ session_start();
         }
         
         .container {
-            max-width: 800px;
-            margin: 50px auto;
+            max-width: 600px;
+            margin: 100px auto;
             background-color: white;
             padding: 30px;
             border-radius: 5px;
@@ -28,13 +35,13 @@ session_start();
         
         h1 {
             color: #333;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         
-        .welcome-message {
+        .message {
             font-size: 18px;
             color: #666;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
         }
         
         .nav-links {
@@ -60,47 +67,29 @@ session_start();
             background-color: #45a049;
         }
         
-        .message {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
+        .login-link {
+            background-color: #2196F3 !important;
         }
         
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .date-display {
-            color: #777;
-            font-style: italic;
-            margin-top: 30px;
+        .login-link:hover {
+            background-color: #0b7dda !important;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Our Website</h1>
+        <h1>Access Required</h1>
         
-        <?php
-        // Display logout message if present
-        if (isset($_GET['message']) && $_GET['message'] == 'logged_out') {
-            echo '<div class="message success">You have been successfully logged out.</div>';
-        }
-        ?>
-        
-        <div class="welcome-message">
-            <p>We're glad you're here! Please login or register to continue.</p>
+        <div class="message">
+            <p>You need to be logged in to access this page.</p>
+            <p>Please login or register to continue.</p>
         </div>
+        
         <div class="nav-links">
-            <a href="register.php">Registration Page</a>
-            <a href="login.php">Login Page</a>
+            <a href="register.php">Register</a>
+            <a href="login.php" class="login-link">Login</a>
+            <a href="home.php">Home</a>
         </div>
-        
-        <?php
-        echo "<p class='date-display'>Current date and time: " . date("Y-m-d H:i:s") . "</p>";
-        ?>
     </div>
 </body>
 </html>

@@ -2,6 +2,8 @@
 // Include the database connection file
 require_once 'db_connection.php';
 
+echo "<h1>Database Initialization</h1>\n";
+
 try {
     // Create the users table
     $sql = "CREATE TABLE IF NOT EXISTS users (
@@ -17,6 +19,7 @@ try {
     )";
     
     $pdo->exec($sql);
+    echo "<p>✓ Users table created or already exists</p>\n";
     
     // Create the rides table
     $sql = "CREATE TABLE IF NOT EXISTS rides (
@@ -34,6 +37,7 @@ try {
     )";
     
     $pdo->exec($sql);
+    echo "<p>✓ Rides table created or already exists</p>\n";
     
     // Create the ride_passengers table
     $sql = "CREATE TABLE IF NOT EXISTS ride_passengers (
@@ -48,10 +52,12 @@ try {
     )";
     
     $pdo->exec($sql);
+    echo "<p>✓ Ride passengers table created or already exists</p>\n";
     
-    echo "Database tables created successfully!";
+    echo "<h2>Database initialization completed successfully!</h2>\n";
+    echo "<p><a href='register.php'>Try registering a new user</a></p>\n";
     
 } catch (PDOException $e) {
-    echo "Error creating tables: " . $e->getMessage();
+    echo "<p>Error creating tables: " . $e->getMessage() . "</p>\n";
 }
 ?>

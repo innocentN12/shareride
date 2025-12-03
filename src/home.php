@@ -60,16 +60,21 @@ session_start();
             background-color: #45a049;
         }
         
-        .message {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 4px;
-        }
-        
-        .success {
+        .user-info {
             background-color: #d4edda;
             color: #155724;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
             border: 1px solid #c3e6cb;
+        }
+        
+        .logout-btn {
+            background-color: #f44336 !important;
+        }
+        
+        .logout-btn:hover {
+            background-color: #d32f2f !important;
         }
         
         .date-display {
@@ -83,20 +88,32 @@ session_start();
     <div class="container">
         <h1>Welcome to Our Website</h1>
         
-        <?php
-        // Display logout message if present
-        if (isset($_GET['message']) && $_GET['message'] == 'logged_out') {
-            echo '<div class="message success">You have been successfully logged out.</div>';
-        }
-        ?>
-        
-        <div class="welcome-message">
-            <p>We're glad you're here! Please login or register to continue.</p>
-        </div>
-        <div class="nav-links">
-            <a href="register.php">Registration Page</a>
-            <a href="login.php">Login Page</a>
-        </div>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <!-- User is logged in -->
+            <div class="user-info">
+                <p>Well logged in</p>
+                <p>Hello, <?php echo htmlspecialchars($_SESSION['user_first_name'] . ' ' . $_SESSION['user_last_name']); ?>!</p>
+            </div>
+            
+            <div class="welcome-message">
+                <p>You are successfully logged in. Welcome back!</p>
+            </div>
+            
+            <div class="nav-links">
+                <a href="dashboard.php">Dashboard</a>
+                <a href="logout.php">Logout</a>
+            </div>
+        <?php else: ?>
+            <!-- User is not logged in -->
+            <div class="welcome-message">
+                <p>We're glad you're here! Please login or register to continue.</p>
+            </div>
+            
+            <div class="nav-links">
+                <a href="register.php">Registration Page</a>
+                <a href="login.php">Login Page</a>
+            </div>
+        <?php endif; ?>
         
         <?php
         echo "<p class='date-display'>Current date and time: " . date("Y-m-d H:i:s") . "</p>";

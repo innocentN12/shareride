@@ -77,12 +77,40 @@
         .links a:hover {
             text-decoration: underline;
         }
+        
+        .error {
+            color: #f44336;
+            background-color: #ffebee;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .success {
+            color: #4CAF50;
+            background-color: #e8f5e9;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Login</h1>
-        <form action="login.php" method="post">
+        
+        <?php
+        session_start();
+        // Display any messages from previous actions
+        if (isset($_SESSION['message'])) {
+            $messageClass = isset($_SESSION['message_type']) && $_SESSION['message_type'] == 'error' ? 'error' : 'success';
+            echo '<div class="' . $messageClass . '">' . $_SESSION['message'] . '</div>';
+            unset($_SESSION['message']);
+            unset($_SESSION['message_type']);
+        }
+        ?>
+        
+        <form action="handle_login_user.php" method="post">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
@@ -98,7 +126,7 @@
         
         <div class="links">
             <a href="register.php">Register</a>
-            <a href="index.php">Home</a>
+            <a href="home.php">Home</a>
         </div>
     </div>
 </body>
